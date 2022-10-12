@@ -1,0 +1,147 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace task1
+{
+    public class Candidate
+    {
+        public string name;
+        public string cnic;
+        public double cgpa;
+        public string location;
+        public List<Document> documents = new List<Document>();                                       // making list of  documents
+        public List<Project> projectmarks = new List<Project>();                                     // making list of project marks
+    }
+    public class Project
+    {
+        public int project1Marks;
+        public int projects2Marks;
+    }
+
+    public class Document
+    {
+        public string docName;
+        public string docPath;
+        public string dataType;
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Candidate> shortlisted = new List<Candidate>();
+            List<Candidate> candidates = new List<Candidate>();
+            List<Candidate> topperCands = new List<Candidate>();
+            Random rnd = new Random();
+           
+            Candidate C;                                                                                                                    // making object of Candidate
+            Document D;                                                                                                                     // making object of Documents
+            Project P;                                                                                                                      // making object of Project
+
+            for (int i = 0; i < 2; i++)                                                                                                    // Loop will run to take hardcoded data from user
+            {
+                C = new Candidate();                                                                                                        // allocating new memory space for new candidate
+                Console.WriteLine("************NEXT CANDIDATE {0}************", i + 1);
+                Console.ReadLine();
+                Console.Write("Candidate {0} Name: ", i + 1);
+                C.name = Console.ReadLine();
+                Console.Write("Candidate {0} CNIC: ", i + 1);
+                C.cnic = Console.ReadLine();
+                Console.Write("Candidate {0} CGPA: ", i + 1);
+                C.cgpa = Convert.ToDouble(Console.ReadLine());
+                Console.Write("Candidate {0} Location: ", i + 1);
+                C.location = Console.ReadLine();
+
+                
+                D = new Document();
+                Console.Write("Candidate {0} Document Name: ", i + 1);
+                D.dataType = Console.ReadLine();
+                Console.Write("Candidate {0} Document Path: ", i + 1);
+                D.docPath = Console.ReadLine();
+                Console.Write("Candidate {0} Document Type: ", i + 1);
+                D.dataType = Console.ReadLine();
+                C.documents.Add(D);
+              
+
+                candidates.Add(C);                                                                                                            // Add the data in candidate list
+            }
+
+            Console.WriteLine(">>>>>>>>>Data>>>>>>>>>");
+            Console.ReadLine();
+            for (int k = 0; k < candidates.Count; k++)
+            {
+                
+                Console.WriteLine("|" + candidates[k].name + "|" + candidates[k].cnic + "|" + candidates[k].cgpa + "|" + candidates[k].location + "|");
+                Console.ReadLine();
+            }
+
+
+                                                                                                                                                              // this loop will check the CGPA of Candidates
+            Console.WriteLine(">>>>>>>>>>Candidates with Higher CGPA>>>>>>>>>>>>>>>");
+            Console.ReadLine();
+            for (int k = 0; k < shortlisted.Count; k++)
+            {
+                if (candidates[k].cgpa >= 3.0)
+                {
+                    shortlisted.Add(candidates[k]);                                                                                                          // The Candidates having (CGPa>=3.0) will be added in shortlisted  candidates
+                }
+                                                   
+            }
+            for (int i = 0; i < shortlisted.Count; i++)
+            {
+                Console.WriteLine("|" + shortlisted[i].name + "|" + shortlisted[i].cnic + "|" + shortlisted[i].cgpa + "|" + shortlisted[i].location + "|");
+                Console.ReadLine();  
+            }
+            
+
+
+                                                                                                                                                             // this loop will only take the marks of shortlisted students instead of taking all students
+            Console.WriteLine(">>>>>>>>>>Enter the random marks for projects>>>>>>>>>>>>");
+            Console.ReadLine();
+            for (int j = 0; j < shortlisted.Count; j++)
+            {
+                P = new Project();                
+                Console.Write("Marks in Project-1 : ");
+                P.project1Marks = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Marks in Project-2 : " );
+                P.projects2Marks = Convert.ToInt32(Console.ReadLine());
+                                                                                                      //shortlisted[j].projectmarks[j].projects2Marks = Convert.ToInt32(Console.ReadLine());
+                shortlisted[j].projectmarks.Add(P);                                                                                                             // add projects marks of shortlisted students 
+            }
+            //shortlisted[j].projectmarks[j].project1Marks = rnd.Next(1, 100);
+            //shortlisted[j].projectmarks[j].projects2Marks = rnd.Next(1, 100);
+
+
+            //Console.Write("Marks in Project-1 : ");
+            //P.project1Marks = Convert.ToInt32(Console.ReadLine());
+            //Console.Write("Marks in Project-2 : ");
+            //P.projects2Marks = Convert.ToInt32(Console.ReadLine());
+            //C.projectmarks.Add(P);
+
+                                                                                                                                                                  // this loop will check the percentage of projects of shortlisted students
+
+            double percentage;
+            for (int i = 0; i < shortlisted.Count; i++)
+            {
+                percentage = ((shortlisted[i].projectmarks[i].project1Marks + shortlisted[i].projectmarks[i].projects2Marks) / 2) * 100;                          // calculate the percentage of both projects and save the value in percentage
+                if (percentage > 90)                                                                                                                              // only select the shortlisted students who have percentage more than 90
+                {
+                    topperCands.Add(shortlisted[i]);                                                                                                             // add the students(having percentage >90) in topperCand list
+                }
+                
+            }
+
+            for (int k = 0; k < topperCands.Count; k++)
+            {
+                Console.WriteLine("|" + topperCands[k].name + "|" + topperCands[k].cnic + "|" + topperCands[k].cnic + "|" + topperCands[k].location + "|");
+                Console.ReadLine();
+            }
+
+
+
+        }
+    }
+}
